@@ -4,12 +4,12 @@ const Redis = require('redis');
 const app = express();
 
 const port = 3000;
-const redisClient = Redis.createClient();
+const redisClient = Redis.createClient({url:'redis://127.0.0.1:6379'}); 
 
 app.use(bodyParser.json()); //allow json reuests 
 
 app.listen(port, () => {
-    redisClient.connect();
+    redisClient.connect(); //the Api server is trying to connect with redis 
     console.log("listening on port : " + port);
 });
 
@@ -18,11 +18,13 @@ app.get('/' , (req, res) => {
     
 });
 
-app.post('/login' ,(req,res) =>{
+app.post('/login', async (req,res) =>{ //async -> 
  const loginBody = req.body;
  const userName = loginBody.userName;
  const password = loginBody.password;
-if (password==="Kurokawa96@"){
+ const redisPassword = await redisClient.hGet('users' , userName);
+ console.log("password for "+userName+" " + redisPassword);
+if (redisPassword!=null && password===redisPassword){
     //This happends if the password is correct
     res.send("Welcome " + userName);
 }else
