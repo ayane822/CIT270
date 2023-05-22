@@ -3,16 +3,25 @@ const bodyParser = require('body-parser');
 const Redis = require('redis');
 const app = express();
 const { createHash } = require('node:crypto');
+const fs = require('fs')
+const https = require('https')
+//...
+https.createServer({
+  key: fs.readFileSync('server.key'),
+  cert: fs.readFileSync('server.cert')
+}, app).listen(3000, () => {
+  console.log('Listening...')
+})
 
 const port = 3000;
 const redisClient = Redis.createClient({url:'redis://127.0.0.1:6379'}); 
 
 app.use(bodyParser.json()); //allow json reuests 
 
-app.listen(port, () => {
-    redisClient.connect(); //the Api server is trying to connect with redis 
-    console.log("listening on port : " + port);
-});
+// app.listen(port, () => {
+//     redisClient.connect(); //the Api server is trying to connect with redis 
+//     console.log("listening on port : " + port);
+// });
 
 app.get('/' , (req, res) => {
     res.send("Welcome to your node server!");
@@ -36,3 +45,5 @@ if (hashedpassword ===redisPassword){
     res.send("Incorrect passowrd");
 
 }});
+
+//app.
