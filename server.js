@@ -7,8 +7,9 @@ const fs = require('fs')
 const https = require('https')
 //...
 https.createServer({
-  key: fs.readFileSync('server.key'),
-  cert: fs.readFileSync('server.cert')
+  key: fs.readFileSync('privkey1.pem'), //This is a private key 
+  cert: fs.readFileSync('cert1.pem'),
+  chain:fs.readFileSync('fullchain1.pem')//This is a self-signed ceriticated.
 }, app).listen(3000, () => {
   console.log('Listening...')
 })
