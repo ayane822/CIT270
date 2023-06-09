@@ -4,13 +4,15 @@ const Redis = require('redis');
 const app = express();
 const { createHash } = require('node:crypto');
 const fs = require('fs')
-const https = require('https')
+const https = require('https');
+const { connect } = require('node:http2');
 //...
 https.createServer({
   key: fs.readFileSync('privkey1.pem'), //This is a private key 
   cert: fs.readFileSync('cert1.pem'),
   chain:fs.readFileSync('fullchain1.pem')//This is a self-signed ceriticated.
 }, app).listen(3000, () => {
+  redisClient.connect();
   console.log('Listening...')
 })
 
