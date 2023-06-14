@@ -11,7 +11,7 @@ https.createServer({
   key: fs.readFileSync('/etc/letsencrypt/archive/aya.cit270.com/privkey1.pem'), //This is a private key 
   cert: fs.readFileSync('/etc/letsencrypt/archive/aya.cit270.com/cert1.pem'),
   ca:fs.readFileSync('/etc/letsencrypt/archive/aya.cit270.com/chain1.pem')//This is a self-signed ceriticated.
-}, app).listen(3000, () => {
+}, app).listen(443, () => {
   redisClient.connect();
   console.log('Listening...')
 })
