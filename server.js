@@ -7,20 +7,23 @@ const fs = require('fs')
 const https = require('https');
 const { connect } = require('node:http2');
 //...
-https.createServer({
-  key: fs.readFileSync('/etc/letsencrypt/archive/aya.cit270.com/privkey1.pem'), //This is a private key 
-  cert: fs.readFileSync('/etc/letsencrypt/archive/aya.cit270.com/cert1.pem'),
-  ca:fs.readFileSync('/etc/letsencrypt/archive/aya.cit270.com/chain1.pem')//This is a self-signed ceriticated.
-}, app).listen(443, () => {
-  redisClient.connect();
-  console.log('Listening...')
-})
+// https.createServer({
+//   key: fs.readFileSync('/etc/letsencrypt/archive/aya.cit270.com/privkey1.pem'), //This is a private key 
+//   cert: fs.readFileSync('/etc/letsencrypt/archive/aya.cit270.com/cert1.pem'),
+//   ca:fs.readFileSync('/etc/letsencrypt/archive/aya.cit270.com/chain1.pem')//This is a self-signed ceriticated.
+// }, app).listen(443, () => {
+//   redisClient.connect();
+//   console.log('Listening...')
+// })
 
 const port = 3000;
 const redisClient = Redis.createClient({url:'redis://127.0.0.1:6379'}); 
 
 app.use(bodyParser.json()); //allow json reuests 
-
+app.listenerCount(port, () => {
+    redisClient.connect();
+    console.log("Listening...");
+})
 // app.listen(port, () => {
 //     redisClient.connect(); //the Api server is trying to connect with redis 
 //     console.log("listening on port : " + port);
