@@ -17,7 +17,9 @@ const { connect } = require('node:http2');
 // })
 
 const port = 3000;
-const redisClient = Redis.createClient({url:'redis://127.0.0.1:6379'}); 
+// const redisClient = Redis.createClient({url:'redis://127.0.0.1:6379'}); 
+const redisClient = Redis.createClient({url:'redis://:P@ssw0rd@redis-stedi-aya'}); 
+
 
 app.use(bodyParser.json()); //allow json reuests 
 
