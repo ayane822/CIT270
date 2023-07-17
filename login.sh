@@ -1,6 +1,6 @@
 echo "Logging in"
 
-curl  --insecure -v -d "@login.json" POST -H "Content-Type:application/json" http://localhost:3000/login
+curl  --insecure -v -d "@login.json" POST -H "Content-Type:application/json" https://aya.cit270.com/login
 ##POST means pushing something to website
 
 
